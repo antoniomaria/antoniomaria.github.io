@@ -53,6 +53,7 @@ To execute the plugin
     mvn javadoc:javadoc
 
 References:
+
 * [Official UMLGraph Site](http://www.umlgraph.org/)
 * [Code examples UMLGraph Maven](https://github.com/antoniomaria/umlgraph-test)
 * [Be a better developer](http://www.beabetterdeveloper.com/2013/03/automated-class-diagrams-using-maven.html)
