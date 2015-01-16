@@ -12,6 +12,8 @@ One negative issue is that the project is not quite active the latest official r
 
 > Note about UmlGraph: You must have the Graphviz binary in your PATH, or the images will not be generated. For more information about Graphviz, please refer to http://www.graphviz.org/
 
+{% gist antoniomaria/61cb521dc85743068556 %}
+
 ```xml
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
