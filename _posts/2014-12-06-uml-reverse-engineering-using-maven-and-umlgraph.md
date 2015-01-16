@@ -10,6 +10,7 @@ An open source and easy to apply approach is [UMLGraph][umlgraph]. This a Javado
 
 One negative issue is that the project is not quite active the latest official release was in [May 2013](http://search.maven.org/#search|ga|1|umlgraph), the positive side is that the [snapshots](https://github.com/dspinellis/UMLGraph) are not that old, and Java 8 is seemed supported. One pretty straight forward solution is to build the doclet from sources or take the latest snapshot from [Download page](http://www.umlgraph.org/download.html) and copy and references it using docletPath tag for a maven integration.
 
+> Note about UmlGraph: You must have the Graphviz binary in your PATH, or the images will not be generated. For more information about Graphviz, please refer to http://www.graphviz.org/
 
 ```xml
   <plugin>
