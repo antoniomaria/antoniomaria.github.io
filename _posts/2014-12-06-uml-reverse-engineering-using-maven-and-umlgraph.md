@@ -12,48 +12,14 @@ One negative issue is that the project is not quite active the latest official r
 
 > Note about UmlGraph: You must have the Graphviz binary in your PATH, or the images will not be generated. For more information about Graphviz, please refer to http://www.graphviz.org/
 
+Ant Syntax
+
 {% gist antoniomaria/61cb521dc85743068556 %}
 
-```xml
-  <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-javadoc-plugin</artifactId>
-    <version>2.9</version>
-    <configuration>
-      <tags>
-        <tag>
-          <name>depend</name>
-          <placement>X</placement>
-        </tag>
-        <tag>
-          <name>hidden</name>
-          <placement>X</placement>
-        </tag>
-        <tag>
-          <name>opt</name>
-          <placement>X</placement>
-        </tag>
-      </tags>
-      <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-      <docletPath>C:/Users/antonio/git/UMLGraph/lib/UmlGraph.jar</docletPath>
-      <additionalparam>-inferrel</additionalparam>
-      <additionalparam>-inferdep</additionalparam>
-      <additionalparam>-collapsible</additionalparam>
-      <additionalparam>-hide java.*</additionalparam>
-      <additionalparam>-collpackages</additionalparam>
-      <additionalparam>-qualify</additionalparam>
-      <additionalparam>-postfixpackage</additionalparam>
-      <additionalparam>-nodefontsize 9</additionalparam>
-      <additionalparam>-nodefontpackagesize 7</additionalparam>
-      <additionalparam>-link http://docs.oracle.com/javase/7/docs/jdk/api/javadoc/doclet/</additionalparam>
-      <additionalparam>-link http://download.oracle.com/javase/7/docs/api/</additionalparam>
-      <useStandardDocletOptions>true</useStandardDocletOptions>          
-    </configuration>
-  </plugin>
-```
+Maven Syntax
 
-To execute the plugin
-    mvn javadoc:javadoc
+{% gist antoniomaria/885558704946e51885b6 %}
+
 
 References:
 
