@@ -20,13 +20,10 @@ jobs:
         with:
           python-version: 3.7
           environment-file: devtools/conda-envs/docs_env.yaml
-          auto-update-conda: false
-          auto-activate-base: false
-          show-channel-urls: true
-      - name: Installing the library
-        shell: bash -l {0}
-        run: |
-          python setup.py install
+          auto-update-conda: true
+      - name: Conda info
+        shell: bash -el {0}
+        run: conda info
       - name: Running the Sphinx to gh-pages Action
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0.0
         with:
