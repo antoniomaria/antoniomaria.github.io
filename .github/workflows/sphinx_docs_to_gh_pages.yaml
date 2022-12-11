@@ -29,9 +29,10 @@ jobs:
       - name: Make conda environment
         uses: conda-incubator/setup-miniconda@v2    # https://github.com/conda-incubator/setup-miniconda
         with:
-          python-version: 3.7
+          python-version: 3.9
           environment-file: environment.yaml
-          auto-update-conda: true
+          auto-activate-base: true
+          activate-environment: ""
       - name: Conda info
         shell: bash -el {0}
         run: conda info
