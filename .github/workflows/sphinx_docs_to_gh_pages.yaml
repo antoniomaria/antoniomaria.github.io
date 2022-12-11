@@ -3,7 +3,7 @@ name: Sphinx docs to gh-pages
 on:
   push:
     branches:
-      - main
+      - master
 
   workflow_dispatch:
 
@@ -12,14 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     name: Sphinx docs to gh-pages
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Cache conda
+        uses: actions/cache@v1
+        env:
+          # Increase this value to reset cache if
+          # etc/example-environment.yml has not changed
+          CACHE_NUMBER: 0
+        with:
+          # ~/conda_pkgs_dir set via miniconda action
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('environment.yml') }}
       - name: Make conda environment
         uses: conda-incubator/setup-miniconda@v2    # https://github.com/conda-incubator/setup-miniconda
         with:
           python-version: 3.7
-          environment-file: devtools/conda-envs/docs_env.yaml
+          environment-file: environment.yaml
           auto-update-conda: true
       - name: Conda info
         shell: bash -el {0}
