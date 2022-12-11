@@ -36,7 +36,7 @@ jobs:
         shell: bash -el {0}
         run: conda info
       - name: Install requirements.txt
-        run: pip install -r requirements.txt
+        run: pip3 install -r requirements.txt
       - name: Running the Sphinx to gh-pages Action
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0.0
         with:

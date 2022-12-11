@@ -1,1 +1,2 @@
+sphinx
 yummy_sphinx_theme
