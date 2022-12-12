@@ -37,6 +37,36 @@ How to install MySQL on macOS using homebrew
    $ mysql -u root -p
 
 
+Installation details
+*********************************************
+
+.. code-block:: bash
+
+    $ brew list mysql
+    /opt/homebrew/Cellar/mysql/8.0.31/.bottle/etc/my.cnf
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/mysql
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/mysql.server
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/mysql_client_test
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/mysql_config
+    /opt/homebrew/Cellar/mysql/8.0.31/bin/
+    /opt/homebrew/Cellar/mysql/8.0.31/homebrew.mysql.service
+    /opt/homebrew/Cellar/mysql/8.0.31/lib/ (3 other files)
+    /opt/homebrew/Cellar/mysql/8.0.31/share/
+    /opt/homebrew/Cellar/mysql/8.0.31/support-files/ (3 files)
+    /opt/homebrew/etc/my.cnf
+
+.. code-block:: bash
+
+    $ cat /opt/homebrew/etc/my.cnf
+    # Default Homebrew MySQL server config
+    [mysqld]
+    # Only allow connections from localhost
+    bind-address = 127.0.0.1
+    mysqlx-bind-address = 127.0.0.1
+    secure-file-priv=
+
+
 Operation commands
 *********************************************
 
@@ -63,6 +93,18 @@ If you don't want MySQL service to start every time you start your mac then run 
 
     $ brew services start mysql
 
+Import CSV or restoring a backup up
+-----------------------------------
+While trying to import a CSV on a mysql instance, noticed that mysql check if folder where backup is located is secure. This property is determine by
+`secure-file-priv`_. Set to empty to disable the validation on my.conf, or copy your files to default folder. In DEB, RPM, SLES, SVR4 based distro default is /var/lib/mysql-files.
+In macOS default is NULL, which means import and exports operation are disabled.
+
+.. code-block:: bash
+
+    $ cat mydump.txt
+    LOAD DATA INFILE 'output-00001.csv' INTO TABLE employee FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS (id,name, age);
+    $ mysql -u root -p hpd < mydump.sql
+
 
 References
 *********************************************
@@ -70,3 +112,6 @@ References
 * See more `how-install-mysql-macos-homebrew`_.
 
 .. _how-install-mysql-macos-homebrew: https://www.novicedev.com/blog/how-install-mysql-macos-homebrew
+.. _secure-file-priv: https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_secure_file_priv
+
+.. target-notes::
