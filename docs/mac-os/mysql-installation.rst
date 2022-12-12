@@ -2,7 +2,6 @@
 How to install MySQL on macOS
 ==============================================
 
-**********************************************
 How to install MySQL on macOS using homebrew
 *********************************************
 
@@ -14,7 +13,7 @@ How to install MySQL on macOS using homebrew
    ==> mysql
    We\'ve installed your MySQL database without a root password. To secure it run:
    mysql_secure_installation
-§
+
 2. Starts a mysql instance
 
 .. code-block:: bash
@@ -38,7 +37,6 @@ How to install MySQL on macOS using homebrew
    $ mysql -u root -p
 
 
-*********************************************
 Operation commands
 *********************************************
 
@@ -64,3 +62,11 @@ If you don't want MySQL service to start every time you start your mac then run 
 .. code-block:: bash
 
     $ brew services start mysql
+
+
+References
+*********************************************
+
+* See more `how-install-mysql-macos-homebrew`_.
+
+.. _how-install-mysql-macos-homebrew: https://www.novicedev.com/blog/how-install-mysql-macos-homebrew
