@@ -71,17 +71,10 @@ Edit the docs/conf.py as:
     html_theme = 'yummy_sphinx_theme'
 
 
-
+Exploration
+===========
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :titlesonly:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    mac-os/index
