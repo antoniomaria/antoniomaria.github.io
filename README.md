@@ -17,3 +17,8 @@
     ```sh
     html_theme = 'yummy_sphinx_theme'
     ```
+3. Generate documentation
+    ```sh
+    $ make html
+    The HTML pages are in build/html
+   ```

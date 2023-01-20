@@ -1,5 +1,5 @@
-MacOS related notes
-======================
+Using MacOS as development environment
+======================================
 
 I am not a devoted Apple user, don't like to be locked in Apple ecosystem, but I admit that for development is a quite nice
 option. It has support for cooperative applications, and a BSD based OS which is much handier than an emulator in windows, or
