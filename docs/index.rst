@@ -20,3 +20,7 @@ Site content
     sphinx-doc-installation
     mac-os/index
     development-tools/index
+
+.. |date| date::
+
+Last Updated on |date|

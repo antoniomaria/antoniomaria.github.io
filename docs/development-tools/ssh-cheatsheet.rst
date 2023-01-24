@@ -79,7 +79,7 @@ Verify that you have access to your ec2 instance which has access to DB ::
 
 Create ssh tunnel port forwarding ::
 
-    ssh -i id_rsa -L 3306:RDS-HOST-NAME:3306 ec2-user@IP-ADDRESS
+    ssh -i id_rsa -L 3306:RDS-HOST-NAME:3306 ec2-user@EC2_IP_ADDRESS
 
 Once the tunnel is open you can access to private resource from localhost ::
 
