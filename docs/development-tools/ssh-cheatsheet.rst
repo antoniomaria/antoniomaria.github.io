@@ -60,4 +60,34 @@ or use specific key per server ::
       AddKeysToAgent yes
       IdentityFile ~/.ssh/id_ed25519
 
+*********************
+Creating SSH Tunnel
+*********************
+
+SSH tunnels come in handy when doing local development where you access to private resources. Typically you have databases
+on cloud or private data centers with ip-filtering, or behind some firework which prevent using ordinary sql / nosql clients
+from your laptop. The access to the private resources is allowed only to set of nodes which enough access right (for example
+ec2 instances in the autoscaling group security group enabled to auroradb)
+
+You can read more about the ssh tunnel motivation `_ssh_tunnel`_:
+
+Read from your consul instance, spring-boot configuration... which instance has access to database.
+
+Verify that you have access to your ec2 instance which has access to DB ::
+
+    ssh -i id_rsa ec2-user@EC2_IP_ADDRESS
+
+Create ssh tunnel port forwarding ::
+
+    ssh -i id_rsa -L 3306:RDS-HOST-NAME:3306 ec2-user@IP-ADDRESS
+
+Once the tunnel is open you can access to private resource from localhost ::
+
+    mysql -h 127.0.0.1 -P 3306 -u admin -p12345678
+
+Ensure that you don't have a local mysql instance running in the same port ::
+
+    lsof -i :3306
+
 .. _ssh-academy: https://www.ssh.com/academy/ssh/keygen#creating-an-ssh-key-pair-for-user-authentication
+.. _ssh_tunnel: https://aws.amazon.com/premiumsupport/knowledge-center/systems-manager-ssh-vpc-resources/
