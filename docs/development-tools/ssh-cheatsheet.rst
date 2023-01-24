@@ -69,7 +69,7 @@ on cloud or private data centers with ip-filtering, or behind some firework whic
 from your laptop. The access to the private resources is allowed only to set of nodes which enough access right (for example
 ec2 instances in the autoscaling group security group enabled to auroradb)
 
-You can read more about the ssh tunnel motivation `_ssh_tunnel`_:
+You can read more about the ssh tunnel motivation `ssh_tunnel`_:
 
 Read from your consul instance, spring-boot configuration... which instance has access to database.
 
