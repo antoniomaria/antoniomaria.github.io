@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'antonio coding notes'
-copyright = '2022, Antonio Sanchez Berrocal'
+copyright = 'Antonio Sanchez Berrocal'
 author = 'Antonio Maria Sanchez Berrocal'
 
 # -- General configuration ---------------------------------------------------
@@ -23,5 +23,5 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'yummy_sphinx_theme'
+html_theme = 'furo'
 html_static_path = ['_static']
