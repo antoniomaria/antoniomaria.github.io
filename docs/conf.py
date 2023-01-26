@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'antonio coding notes'
-copyright = '2022, Antonio Maria Sanchez Berrocal'
+copyright = '2022, Antonio Sanchez Berrocal'
 author = 'Antonio Maria Sanchez Berrocal'
 
 # -- General configuration ---------------------------------------------------
