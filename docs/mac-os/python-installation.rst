@@ -1,6 +1,6 @@
-==================
-Python on M1 macOS
-==================
+======================
+Python on ARM M1 macOS
+======================
 
 Sooner than later as a mac user will end up using python, and you ask your self this question
 
@@ -8,10 +8,10 @@ Which Python am I using?
 ************************
 
 Or most specifically which python interpreter is used when a run a Python based program (like ansible). You will likely have
-available ``python3`` in a M1 based macOs. But python2 is not available any more
+available ``python3`` in a ARM based macOs. But python2 is not available any more in case that you need it this guide will come in
+handy.
 
-.. code-block:: shell
-    :linenos:
+.. parsed-literal::
 
     QFINM377:~ antonio.sanchez$ type python3
     python3 is /usr/bin/python3
@@ -40,28 +40,35 @@ Add in your ``.bash_profile`` and reload with ``source .bash_profile``.
     eval "$(pyenv init -)"
 
 
-Now you can install phyton2 and python3 and switch between them
+Now you can install python2 and python3 and switch between them
 
 
 .. code-block:: shell
-    :linenos:
 
-    pyenv install --list
-    pyenv install 3.10.6
-    pyenv install 2.7.18
-    pyenv global 3.10.6
+    $ pyenv install --list
+    $ pyenv install 3.10.6
+    $ pyenv install 2.7.18
+    $ pyenv global 3.10.6
 
 Virtual environments using pyenv
 *********************************
 
-Create and use virtual environment.
+You can create and use virtual environment out of your installed python version.
 
 .. code-block:: shell
-    :linenos:
 
-    pyenv virtualenv my-python-app-env
+    $ pyenv versions
+      system
+      2.7.18
+      * 3.10.6 (set by /Users/antonio.sanchez/.pyenv/version)
+    $ pyenv virtualenv 2.7.18 my-python-app-env
 
-    pyenv activate my-python-app-env
+Your shell prompt will change once the virtual environment is activated. You can install dependencies
+without conflicting with other installations.
+
+.. code-block:: shell
+
+    $ pyenv activate my-python-app-env
 
     # installed requirements
-    pip install -r my-python-app-dependencies.pip
+    $ (my-python-app-env) pip install -r my-python-app-dependencies.pip
