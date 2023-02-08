@@ -31,6 +31,21 @@ where data looks like
         </soapenv:Body>
     </soapenv:Envelope>
 
+
+Similar spell but explicitly define HTTP method, and url
+
+.. code-block:: console
+
+    curl --request POST --data-binary @data.json --header 'Content-Type: application/vnd.api+json' --url http://localhost:3111/ws
+
+
+Using curl to download a file
+*****************************
+
+.. code-block:: bash
+
+    curl -O https://dlcdn.apache.org/cassandra/3.11.13/apache-cassandra-3.11.13-bin.tar.gz
+
 Interesting links
 *****************
 

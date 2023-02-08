@@ -43,6 +43,7 @@ See more `install-homebrew-on-mac`_.
    $ brew install --cask temurin
 
 And these will be installed into /Library/Java/JavaVirtualMachines/
+
 .. code-block:: bash
 
    /usr/libexec/java_home -V
