@@ -1,0 +1,26 @@
+---
+all:
+  vars:
+    version: 2023.01
+    # Comment out this line if artifact is not SNAPSHOT
+    version_suffix: "-SNAPSHOT"
+
+    serial: 2
+    can_access_artifactory: false
+
+    ansible_python_interpreter: /opt/python-2.7.10/bin/python
+    service_stop_command: "systemctl stop rest-application.service"
+    service_start_command: "systemctl start rest-application.service"
+    rest_application_jvm_opts: |
+      -J-Xmx1G
+      -J-XX:+UseG1GC
+      -J-XX:MaxGCPauseMillis=1000
+
+  children:
+    rest_application:
+      hosts:
+        node1.production.net:
+        node2.production.net:
+          ansible_python_interpreter: '/usr/bin/python3'
+          application_java_home: "/java_11/jdk-11.0.11"
+        node3.production.net:

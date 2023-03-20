@@ -1,5 +1,5 @@
-How to create a web site using sphinx-docs
-============================================
+How to create a static website with sphinx-docs
+===============================================
 
 Sphinx-docs is really popular in project documentation, I myself wanted to give a try also to write my own notes.
 Because I would like to publish the site using github pages. I started checking out my own repository from git.

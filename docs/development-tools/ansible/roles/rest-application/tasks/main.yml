@@ -1,0 +1,102 @@
+---
+# tasks file: main.yml 
+
+- set_fact:
+    artifactory_url: "{{ artifactory_release_repository }}"    
+
+- set_fact:
+    artifactory_url: "{{ artifactory_snapshot_repository }}"
+  when:
+    is_snapshot
+
+- name: Download the artifact from artifactory
+  get_url:
+    url: "{{ rest_application_artifact_url }}"
+    dest: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+  when:
+    can_access_artifactory
+  tags: [ download-artifact ]
+
+- name: Download the artifact to local
+  delegate_to: localhost
+  get_url:
+    url: "{{ rest_application_artifact_url }}"
+    dest: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+  when:
+    not can_access_artifactory
+  tags: [ download-artifact ]
+
+- name: Copy the artifact to target
+  copy:
+    src: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+    dest: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+    mode: u=rw,g=rw,o=r
+  when:
+    not can_access_artifactory
+  tags: [ download-artifact ]
+
+- name: Extract artifact to release directory
+  unarchive:
+    copy: no
+    src: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+    dest: "{{ rest_application_releases_dir }}"
+    mode: u=rwx,g=rwx+s,o=rx
+
+- name: Setting rw permissions to group
+  file:
+    dest: "{{ rest_application_install_dir }}"
+    mode: "u=rwX,g=rwX,o=rX"
+    recurse: "yes"
+
+- name: Make the link to application launcher
+  file:
+    src: "{{ rest_application_install_dir }}/bin/{{ rest_application_artifact_id }}"
+    dest: "{{ rest_application_install_dir }}/{{ rest_application_artifact_id }}"
+    state: link
+
+- name: Configure JVM settings
+  template:
+    src: "application.ini.j2"
+    dest: "{{ rest_application_install_dir }}/conf/application.ini"
+
+- name: Stop service
+  shell: "{{ rest_application_service_stop_command }}"
+  register: log_result
+  ignore_errors: yes
+  tags: [ restart-service ]
+
+- name: Update current release link
+  file:
+    src: "{{ rest_application_install_dir }}"
+    dest: "/apps/rest-application/current"
+    state: link
+  tags: [ update-current-link ]
+
+- name: Start service
+  shell: "{{ rest_application_service_start_command }}"
+  register: log_result
+  failed_when: "log_result.rc not in [ 0 ]"
+  tags: [ restart-service ]
+
+- name: Show start command output
+  debug: msg="{{ log_result.stdout_lines }}"
+  when: log_result
+  tags: [ restart-service ]
+
+- name: Wait service to be healthy
+  uri:
+    url: "{{ rest_application_health_check_url }}"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 5
+  delay: 10
+  tags: [ health-check ]
+
+- name: Remove downloaded artifact
+  file:
+    path: "/tmp/{{ rest_application_artifact_id }}-{{ version }}.tgz"
+    state: absent
+
+- name: Show install dir
+  debug: msg="{{ rest_application_install_dir }}"

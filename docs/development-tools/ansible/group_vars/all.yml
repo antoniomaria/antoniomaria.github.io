@@ -1,0 +1,3 @@
+application_java_home: /opt/java11
+
+is_snapshot: "{{ version_suffix | default('') is match('.*-SNAPSHOT') }}"

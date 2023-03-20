@@ -1,0 +1,8 @@
+---
+
+# play file: rest-application.yml
+
+- hosts:
+    rest_application
+  roles:
+    - rest-application

@@ -1,0 +1,12 @@
+├── group_vars
+│     └── all.yml
+├──  roles
+│     └── rest-application
+│         ├── defaults
+│         │   └── main.yml
+│         ├── tasks
+│         └── templates
+│              └── application.ini.j2
+├──  production.yml
+├──  staging.yml
+└──  rest-application.yml
