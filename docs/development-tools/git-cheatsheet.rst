@@ -13,6 +13,16 @@ Define author name / email to be used for all commits in current repo or globall
     $ git config --global user.email "john.smith@qvantel.com"
     $ git config --global user.name "John Smith"
 
+
+Git checkout
+************
+
+Fetch, and create a local branch out of a remote branch ::
+
+    git fetch
+    git branch -r
+    git checkout -b feature/my-feature origin/feature/my-feature
+
 Git Reset
 ***************
 

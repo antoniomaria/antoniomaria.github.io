@@ -6,7 +6,7 @@
 Bites of knowledge!
 ============================================
 
-Hello there, my name is Antonio Sanchez Berrocal and I am a software developer located in Finland. I do coding for a living, and learn
+Hello there, my name is Antonio Sanchez Berrocal and I am a software developer located in Finland. I code for a living, and learn
 on the way. I am writing this for myself and for those who might find this site interesting.
 Noticed that sphinx-template this site uses mentioned on the bottom "copyright", don’t take it seriously, too lazy to figure
 out to remove it :)
