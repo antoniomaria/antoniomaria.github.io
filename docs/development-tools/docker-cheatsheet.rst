@@ -1,11 +1,10 @@
-==================
 Docker Cheat Sheet
 ==================
 
 This cheat sheet is not meant to be exhausted and only most frequently used command are included.
 
 Docker install
-***************
+---------------
 
 Install Docker CLI ::
 
@@ -13,7 +12,7 @@ Install Docker CLI ::
   brew install docker-compose
 
 Docker pull
-***************
+------------
 
 Pull default tag::
 
@@ -27,7 +26,7 @@ Pull default tag::
     docker.io/library/alpine:latest
 
 Docker run
-***************
+-----------
 
 Run container named test using the alpine:latest image. The -it instructs Docker to allocate a pseudo-TTY connected to
 the container’s stdin; creating an interactive bash shell in the container. Container will be removed on exit
@@ -46,20 +45,29 @@ Run a Docker container in the background, or detached mode.
    b914647c5233865c4f227a814a1d45978d95aea5d0bc50e6fce53d3c4b444a8b
 
 Docker exec
-*************
+------------
 
 .. code-block:: bash
 
    docker exec -it my-apache-app bash
 
 Docker rm
-************
+----------
+
 Delete a container even running
 
 .. code-block:: bash
 
    docker rm --force my-apache-app
 
+Docker login
+-------------
+When using a private artifactory as a docker registry. First you need to login to avoid this error:
+
+.. code-block:: bash
+
+    Error response from daemon: Head "https://myartifactory/v2/kafka/manifests/latest": unknown: Props Authentication Token not found
+    $ docker login artifactory.company.net -u user@domain.com -p base64passwd
 
 Interesting links
 *****************

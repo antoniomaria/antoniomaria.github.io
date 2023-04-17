@@ -44,7 +44,10 @@ Using curl to download a file
 
 .. code-block:: bash
 
-    curl -O https://dlcdn.apache.org/cassandra/3.11.13/apache-cassandra-3.11.13-bin.tar.gz
+    curl -OL https://dlcdn.apache.org/cassandra/3.11.13/apache-cassandra-3.11.13-bin.tar.gz
+
+-L, --location Follow Location header if resource is moved.
+-O, --remote-name Write  output to a local file named
 
 Using curl to find Time to First Byte
 **************************************
