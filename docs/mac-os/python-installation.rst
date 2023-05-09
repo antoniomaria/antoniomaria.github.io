@@ -50,9 +50,19 @@ Now you can install python2 and python3 and switch between them
 .. code-block:: shell
 
     $ pyenv install --list
-    $ pyenv install 3.10.6
+    $ pyenv install 3.10.11
     $ pyenv install 2.7.18
     $ pyenv global 3.10.6
+
+if you see this warning install xz library.
+
+.. code-block:: shell
+
+    ModuleNotFoundError: No module named '_lzma'
+    WARNING: The Python lzma extension was not compiled. Missing the lzma lib?
+
+    $ brew install xz
+
 
 Virtual environments using pyenv
 *********************************
@@ -64,7 +74,7 @@ You can create and use virtual environment out of your installed python version.
     $ pyenv versions
       system
       2.7.18
-      * 3.10.6 (set by /Users/antonio.sanchez/.pyenv/version)
+      * 3.10.11 (set by /Users/antonio.sanchez/.pyenv/version)
     $ pyenv virtualenv 2.7.18 my-python-app-env
 
 Your shell prompt will change once the virtual environment is activated. You can install dependencies
