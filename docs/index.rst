@@ -21,6 +21,7 @@ Site content
     mac-os/index
     development-tools/index
     blog/index
+    copy-past/index
 
 .. |date| date::
 
