@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Consul on Docker</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Continuous Delivery and Rolling Upgrades with Ansible" href="continuous-delivery-with-ansible.html" />
+  <link rel="prev" title="Development blog" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../development-tools/index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development blog</a> &raquo;</li>
+    
+    <li>Consul on Docker</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Development blog</a>
+  </li>
+  <li class="next">
+    <a href="continuous-delivery-with-ansible.html"
+       title="next chapter">Continuous Delivery and Rolling Upgrades with Ansible →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="consul-on-docker">
+<h1>Consul on Docker<a class="headerlink" href="#consul-on-docker" title="Link to this heading">¶</a></h1>
+<p>If you are working on a distributed application where every service has many instances, or more likely you have many
+services, you might be using Consul as a service discovery (DNS lookup) or Consul Key-Value store so the configuration
+and secrets are not part of the service.</p>
+<p>This post will explain you how to get started with consul, and key value store with Docker compose.</p>
+<section id="start-consul-using-docker">
+<h2>Start consul using docker<a class="headerlink" href="#start-consul-using-docker" title="Link to this heading">¶</a></h2>
+<p>There are number of ways to get consul container running locally, one of the easies is using docker-compose like described
+in <a class="reference external" href="https://github.com/hashicorp/learn-consul-docker">learn-consul-docker</a> .</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.7&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+
+<span class="w">  </span><span class="nt">consul-server</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hashicorp/consul:1.15.1</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">consul-server</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./server.json:/consul/config/server.json:ro</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">consul</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8500:8500&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8600:8600/tcp&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8600:8600/udp&quot;</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">consul</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bridge</span>
+</pre></div>
+</div>
+<p>Remember to create a file server.json at the same level that your docker-compose.yml with default configuration</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;node_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;consul-server&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;server&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;bootstrap&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ui_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;enabled&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;data_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/consul/data&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;addresses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;http&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Start the consul by running docker-compose:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker-compose<span class="w"> </span>up
+
+Container<span class="w"> </span>consul-server<span class="w">             </span>Created<span class="w">                                                                                                                                                                                     </span><span class="m">0</span>.0s
+..
+consul-server<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="o">==</span>&gt;<span class="w"> </span>Starting<span class="w"> </span>Consul<span class="w"> </span>agent...
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">               </span>Version:<span class="w"> </span><span class="s1">&#39;1.15.1&#39;</span>
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">            </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="s1">&#39;2023-03-07 20:35:33 +0000 UTC&#39;</span>
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">               </span>Node<span class="w"> </span>ID:<span class="w"> </span><span class="s1">&#39;c581f5bd-d05f-17c3-4e3e-daf3af8d1401&#39;</span>
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">             </span>Node<span class="w"> </span>name:<span class="w"> </span><span class="s1">&#39;consul-server&#39;</span>
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">            </span>Datacenter:<span class="w"> </span><span class="s1">&#39;dc1&#39;</span><span class="w"> </span><span class="o">(</span>Segment:<span class="w"> </span><span class="s1">&#39;&lt;all&gt;&#39;</span><span class="o">)</span>
+consul-server<span class="w">  </span><span class="p">|</span><span class="w">                </span>Server:<span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="o">(</span>Bootstrap:<span class="w"> </span><span class="nb">true</span><span class="o">)</span>
+</pre></div>
+</div>
+<section id="see-more-references">
+<h3>See more references<a class="headerlink" href="#see-more-references" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://alesnosek.com/blog/2017/07/15/first-look-at-the-key-value-store-in-consul/">https://alesnosek.com/blog/2017/07/15/first-look-at-the-key-value-store-in-consul/</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Development blog</a>
+  </li>
+  <li class="next">
+    <a href="continuous-delivery-with-ansible.html"
+       title="next chapter">Continuous Delivery and Rolling Upgrades with Ansible →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

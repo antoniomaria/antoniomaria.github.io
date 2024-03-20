@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Continuous Delivery and Rolling Upgrades with Ansible</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Copy past" href="../copy-past/index.html" />
+  <link rel="prev" title="Consul on Docker" href="consul-docker.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../development-tools/index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development blog</a> &raquo;</li>
+    
+    <li>Continuous Delivery and Rolling Upgrades with Ansible</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="consul-docker.html"
+       title="previous chapter">← Consul on Docker</a>
+  </li>
+  <li class="next">
+    <a href="../copy-past/index.html"
+       title="next chapter">Copy past →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="continuous-delivery-and-rolling-upgrades-with-ansible">
+<h1>Continuous Delivery and Rolling Upgrades with Ansible<a class="headerlink" href="#continuous-delivery-and-rolling-upgrades-with-ansible" title="Link to this heading">¶</a></h1>
+<p>While working on a application running on premises, I noticed that Ansible comes in handy to manage product upgrade
+or automating the release pipeline. My starting point is Rest application implemented in JVM/Scala and running in 15 nodes
+behind a HAProxy which provides high availability and load balancing. To be honest the deployment involves two data center
+and a nginx proxy to balance the load between two data center, but it’s not really relevant for the purpose of ansible use.</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h2>
+<p>The application is distributed as a binary zip tar ball, created by <a class="reference external" href="https://www.scala-sbt.org/sbt-native-packager/formats/universal.html">Sbt native packager</a>, and uploaded after every release
+to an artifactory repository. The application package is a linux package binary application. Basically a zip with
+all dependencies and an a runnable script. If one might question why not to use a fat jar instead you might want to read
+<a class="reference external" href="https://product.hubspot.com/blog/the-fault-in-our-jars-why-we-stopped-building-fat-jars">the-fault-in-our-jars-why-we-stopped-building-fat-jars</a>. I had the same issue that in the post, my third parties dependencies overlap
+META-INF/services and for me it’s was a risk aggregating all dependencies jar in a fat jar.</p>
+</section>
+<section id="the-problem">
+<h2>The problem<a class="headerlink" href="#the-problem" title="Link to this heading">¶</a></h2>
+<p>Rolling up new software updates across 15 nodes in production with zero down time. My nodes are bare metal instances with static ips,
+so for me ansible comes in handy to handle the deployment. In short we are going to use Ansible to automate follow steps:</p>
+<ol class="arabic simple">
+<li><p>Download binary application from artifactory.</p></li>
+<li><p>Extract binary application to application home directory.</p></li>
+<li><p>Update the soft link pointing to the new folder.</p></li>
+<li><p>Restart systemd service.</p></li>
+</ol>
+<p>We will create a ansible directory layout with role and tasks to manage new roll outs.</p>
+<p>Let’s start by showcasing the folder structure that we should aim for.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── group_vars
+│     └── all.yml
+├──  roles
+│     └── rest-application
+│         ├── defaults
+│         │   └── main.yml
+│         ├── tasks
+│         └── templates
+│              └── application.ini.j2
+├──  production.yml
+├──  staging.yml
+└──  rest-application.yml
+</pre></div>
+</div>
+<p>In the folder structure above:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">production.yml</span></code> ansible inventory for production nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_var/all.yml</span></code> place holder file for common variables</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roles/rest-application</span></code> ansible role which will handle the software upgrade</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rest-application.yml</span></code> ansible playbook which binds them all.</p></li>
+</ul>
+<section id="ansible-inventory-files">
+<h3>Ansible inventory files<a class="headerlink" href="#ansible-inventory-files" title="Link to this heading">¶</a></h3>
+<p>Ansible inventory represents a group of hosts that you want to automate tasks on. In my case a group of hosts tagged as “production environment”
+where my application will run. Ansible supports inventory files in ini format or YAML format. I see more convenient and readable to use YML format.</p>
+<p>The inventory production file looks like:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">all</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2023.01</span>
+<span class="w">    </span><span class="c1"># Comment out this line if artifact is not SNAPSHOT</span>
+<span class="w">    </span><span class="nt">version_suffix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-SNAPSHOT&quot;</span>
+
+<span class="w">    </span><span class="nt">serial</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">can_access_artifactory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="w">    </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/python-2.7.10/bin/python</span>
+<span class="w">    </span><span class="nt">service_stop_command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;systemctl</span><span class="nv"> </span><span class="s">stop</span><span class="nv"> </span><span class="s">rest-application.service&quot;</span>
+<span class="w">    </span><span class="nt">service_start_command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;systemctl</span><span class="nv"> </span><span class="s">start</span><span class="nv"> </span><span class="s">rest-application.service&quot;</span>
+<span class="w">    </span><span class="nt">rest_application_jvm_opts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">-J-Xmx1G</span>
+<span class="w">      </span><span class="no">-J-XX:+UseG1GC</span>
+<span class="w">      </span><span class="no">-J-XX:MaxGCPauseMillis=1000</span>
+
+<span class="w">  </span><span class="nt">children</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rest_application</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">node1.production.net</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">node2.production.net</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/usr/bin/python3&#39;</span>
+<span class="w">          </span><span class="nt">application_java_home</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/java_11/jdk-11.0.11&quot;</span>
+<span class="w">        </span><span class="nt">node3.production.net</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>As one might notice the YML format allow to define and override ansible variables for all environment or per host.</p>
+<p>At this point, if you have shared your ssh public key in target hosts, you could run a ping playbook</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ansible -i production.yml -m ping all
+
+node1.production.net | SUCCESS =&gt; {
+  &quot;changed&quot;: false,
+  &quot;ping&quot;: &quot;pong&quot;
+}
+</pre></div>
+</div>
+</section>
+<section id="ansible-roles">
+<h3>Ansible Roles<a class="headerlink" href="#ansible-roles" title="Link to this heading">¶</a></h3>
+<p>Using ansible roles is kind of easy to automate the steps described above.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># tasks file: main.yml </span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">set_fact</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">artifactory_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">artifactory_release_repository</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w">    </span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">set_fact</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">artifactory_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">artifactory_snapshot_repository</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">is_snapshot</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Download the artifact from artifactory</span>
+<span class="w">  </span><span class="nt">get_url</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_artifact_url</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">can_access_artifactory</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">download-artifact</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Download the artifact to local</span>
+<span class="w">  </span><span class="nt">delegate_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span>
+<span class="w">  </span><span class="nt">get_url</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_artifact_url</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">not can_access_artifactory</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">download-artifact</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Copy the artifact to target</span>
+<span class="w">  </span><span class="nt">copy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">u=rw,g=rw,o=r</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">not can_access_artifactory</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">download-artifact</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Extract artifact to release directory</span>
+<span class="w">  </span><span class="nt">unarchive</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">copy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_releases_dir</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">u=rwx,g=rwx+s,o=rx</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Setting rw permissions to group</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_install_dir</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;u=rwX,g=rwX,o=rX&quot;</span>
+<span class="w">    </span><span class="nt">recurse</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;yes&quot;</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Make the link to application launcher</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_install_dir</span><span class="nv"> </span><span class="s">}}/bin/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_install_dir</span><span class="nv"> </span><span class="s">}}/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure JVM settings</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;application.ini.j2&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_install_dir</span><span class="nv"> </span><span class="s">}}/conf/application.ini&quot;</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stop service</span>
+<span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_service_stop_command</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_result</span>
+<span class="w">  </span><span class="nt">ignore_errors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">restart-service</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update current release link</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_install_dir</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/apps/rest-application/current&quot;</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">link</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">update-current-link</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Start service</span>
+<span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_service_start_command</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_result</span>
+<span class="w">  </span><span class="nt">failed_when</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;log_result.rc</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">[</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">]&quot;</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">restart-service</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Show start command output</span>
+<span class="w">  </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">msg=&quot;{{ log_result.stdout_lines }}&quot;</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_result</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">restart-service</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait service to be healthy</span>
+<span class="w">  </span><span class="nt">uri</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rest_application_health_check_url</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">status_code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">result</span>
+<span class="w">  </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">result.status == 200</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">health-check</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remove downloaded artifact</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/tmp/{{</span><span class="nv"> </span><span class="s">rest_application_artifact_id</span><span class="nv"> </span><span class="s">}}-{{</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">}}.tgz&quot;</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absent</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Show install dir</span>
+<span class="w">  </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">msg=&quot;{{ rest_application_install_dir }}&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="ansible-playbook">
+<h3>Ansible playbook<a class="headerlink" href="#ansible-playbook" title="Link to this heading">¶</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="c1"># play file: rest-application.yml</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">rest_application</span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rest-application</span>
+</pre></div>
+</div>
+</section>
+<section id="running-the-playbook">
+<h3>Running the playbook<a class="headerlink" href="#running-the-playbook" title="Link to this heading">¶</a></h3>
+<p>When the ansible layout is ready you can run the playbook which just created</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ansible-playbook -i production.yml rest-application.yml
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="consul-docker.html"
+       title="previous chapter">← Consul on Docker</a>
+  </li>
+  <li class="next">
+    <a href="../copy-past/index.html"
+       title="next chapter">Copy past →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

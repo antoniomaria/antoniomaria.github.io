@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>SSH Cheat Sheet</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Development blog" href="../blog/index.html" />
+  <link rel="prev" title="How to install SDKMan on macOS" href="sdkman-java-installation.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development handy tools</a> &raquo;</li>
+    
+    <li>SSH Cheat Sheet</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="sdkman-java-installation.html"
+       title="previous chapter">← How to install SDKMan on macOS</a>
+  </li>
+  <li class="next">
+    <a href="../blog/index.html"
+       title="next chapter">Development blog →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="ssh-cheat-sheet">
+<h1>SSH Cheat Sheet<a class="headerlink" href="#ssh-cheat-sheet" title="Link to this heading">¶</a></h1>
+<p>This cheat sheet is not meant to be exhausted and only include spells that a backend developer should
+know on daily basis.</p>
+<section id="creating-an-ssh-key-pair-for-user-authentication">
+<h2>Creating an SSH key pair for User Authentication<a class="headerlink" href="#creating-an-ssh-key-pair-for-user-authentication" title="Link to this heading">¶</a></h2>
+<p>Either if you need to commit to github, access to AWS EC2 instances, open a pull request to BitBucket
+or where ever public key authentication is required you must create a key ssh key pair (public+private).
+There are several algorithm type and key sizes supported for ssh-keygen which need to be selected depending
+on the openssh version installed in the server you are trying to authenticate to.</p>
+<p>According to <a class="reference external" href="https://www.ssh.com/academy/ssh/keygen#creating-an-ssh-key-pair-for-user-authentication">ssh-academy</a> ed25519 this is a new algorithm added in OpenSSH, and supported in github but in
+legacy servers you might need to go for a legacy rsa algorithm.</p>
+<p>Here it goes different keygen combinations depending on the algorithm selected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">ed25519</span> <span class="o">-</span><span class="n">C</span> <span class="s2">&quot;your_email@example.com&quot;</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="o">-</span><span class="n">m</span> <span class="n">PEM</span> <span class="o">-</span><span class="n">C</span> <span class="s2">&quot;your_email@example.com&quot;</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="o">-</span><span class="n">b</span> <span class="mi">4096</span> <span class="o">-</span><span class="n">C</span> <span class="s2">&quot;your_email@example.com&quot;</span>
+</pre></div>
+</div>
+<p>Your public/private pair will go to $HOME/.ssh directory. You will be prompt which file name to use
+or id_ed25519, id_rsa depending on the algorithm selected.</p>
+<section id="secure-your-private-key">
+<h3>Secure your private key<a class="headerlink" href="#secure-your-private-key" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>.ssh<span class="w"> </span>$<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>id_rsa
+</pre></div>
+</div>
+</section>
+<section id="copying-the-public-key-to-the-server">
+<h3>Copying the Public Key to the Server<a class="headerlink" href="#copying-the-public-key-to-the-server" title="Link to this heading">¶</a></h3>
+<p>To use public key authentication, the public key must be copied to the server.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="n">user</span><span class="nd">@host</span>
+</pre></div>
+</div>
+</section>
+<section id="use-by-default-your-ssh-key-when-accessing-to-any-server">
+<h3>Use by default your ssh key when accessing to any server<a class="headerlink" href="#use-by-default-your-ssh-key-when-accessing-to-any-server" title="Link to this heading">¶</a></h3>
+<p>In your .ssh/config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="o">*</span>
+  <span class="n">User</span> <span class="n">ansanche</span>
+  <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+  <span class="n">IdentitiesOnly</span> <span class="n">yes</span>
+  <span class="n">PubkeyAcceptedAlgorithms</span> <span class="o">+</span><span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span>
+  <span class="n">HostkeyAlgorithms</span> <span class="o">+</span><span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span>
+</pre></div>
+</div>
+<p>or use specific key per server</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span>
+  <span class="n">Hostname</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span>
+  <span class="n">AddKeysToAgent</span> <span class="n">yes</span>
+  <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_ed25519</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-ssh-tunnel">
+<h2>Creating SSH Tunnel<a class="headerlink" href="#creating-ssh-tunnel" title="Link to this heading">¶</a></h2>
+<p>SSH tunnels come in handy when doing local development where you access to private resources. Typically you have databases
+on cloud or private data centers with ip-filtering, or behind some firework which prevent using ordinary sql / nosql clients
+from your laptop. The access to the private resources is allowed only to set of nodes which enough access right (for example
+ec2 instances in the autoscaling group security group enabled to auroradb)</p>
+<p>You can read more about the ssh tunnel motivation <a class="reference external" href="https://aws.amazon.com/premiumsupport/knowledge-center/systems-manager-ssh-vpc-resources/">ssh_tunnel</a>:</p>
+<p>Read from your consul instance, spring-boot configuration… which instance has access to database.</p>
+<p>Verify that you have access to your ec2 instance which has access to DB</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="n">id_rsa</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@EC2_IP_ADDRESS</span>
+</pre></div>
+</div>
+<p>Create ssh tunnel port forwarding</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="n">id_rsa</span> <span class="o">-</span><span class="n">L</span> <span class="mi">3306</span><span class="p">:</span><span class="n">RDS</span><span class="o">-</span><span class="n">HOST</span><span class="o">-</span><span class="n">NAME</span><span class="p">:</span><span class="mi">3306</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@EC2_IP_ADDRESS</span>
+</pre></div>
+</div>
+<p>Once the tunnel is open you can access to private resource from localhost</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">-</span><span class="n">h</span> <span class="mf">127.0.0.1</span> <span class="o">-</span><span class="n">P</span> <span class="mi">3306</span> <span class="o">-</span><span class="n">u</span> <span class="n">admin</span> <span class="o">-</span><span class="n">p12345678</span>
+</pre></div>
+</div>
+<p>Ensure that you don’t have a local mysql instance running in the same port</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="p">:</span><span class="mi">3306</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="sdkman-java-installation.html"
+       title="previous chapter">← How to install SDKMan on macOS</a>
+  </li>
+  <li class="next">
+    <a href="../blog/index.html"
+       title="next chapter">Development blog →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

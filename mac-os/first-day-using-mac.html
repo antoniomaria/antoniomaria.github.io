@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>First day using MacOs Monterey</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="How to install Java SDK on macOS" href="java-installation.html" />
+  <link rel="prev" title="Ansible installation on ARM macOS" href="ansible-installation.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../development-tools/index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Using MacOS as development environment</a> &raquo;</li>
+    
+    <li>First day using MacOs Monterey</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ansible-installation.html"
+       title="previous chapter">← Ansible installation on ARM macOS</a>
+  </li>
+  <li class="next">
+    <a href="java-installation.html"
+       title="next chapter">How to install Java SDK on macOS →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="first-day-using-macos-monterey">
+<h1>First day using MacOs Monterey<a class="headerlink" href="#first-day-using-macos-monterey" title="Link to this heading">¶</a></h1>
+<p>One of the beauty of a macOs is that it has already almost everything you need. No much tuning is needed,
+However as a old Windows / Linux user I miss some key shortcuts, or favourite editor tools.
+You will find here my favourite tools and workarounds to make my life easier.</p>
+<section id="use-f1-f2-et-as-standard-function-keys">
+<h2>Use F1, F2 et as standard function keys<a class="headerlink" href="#use-f1-f2-et-as-standard-function-keys" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Navigate to System Setting &gt; Keyboard</p></li>
+<li><p>Click on Keyboard shortcuts …</p></li>
+<li><p>Open Function keys from left pane</p></li>
+<li><p>Toggle “Use F1, F2, etc. keys as standard function keys.</p></li>
+</ol>
+</section>
+<section id="disable-sound-on-start-up">
+<h2>Disable sound on start up<a class="headerlink" href="#disable-sound-on-start-up" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Navigate to System Settings &gt; Sound</p></li>
+<li><p>Toggle Play sound on startup</p></li>
+</ol>
+</section>
+<section id="install-itsycal-for-mac">
+<h2>Install Itsycal for Mac<a class="headerlink" href="#install-itsycal-for-mac" title="Link to this heading">¶</a></h2>
+<p>Itsycal is a tiny menu bar calendar with week number. Handy when filling vacations forms.</p>
+<p><a class="reference external" href="https://www.mowglii.com/itsycal/">https://www.mowglii.com/itsycal/</a></p>
+</section>
+<section id="install-alt-tab-for-mac">
+<h2>Install alt-tab for Mac<a class="headerlink" href="#install-alt-tab-for-mac" title="Link to this heading">¶</a></h2>
+<p>For mimicking the Windows alt tab function.</p>
+<p><a class="reference external" href="https://alt-tab-macos.netlify.app/">https://alt-tab-macos.netlify.app/</a></p>
+<p>Use Option + tab to change windows</p>
+</section>
+<section id="install-iterm2">
+<h2>Install iTerm2<a class="headerlink" href="#install-iterm2" title="Link to this heading">¶</a></h2>
+<p>Term2 is a replacement for Terminal</p>
+<p><a class="reference external" href="https://iterm2.com/">https://iterm2.com/</a></p>
+</section>
+<section id="text-editor">
+<h2>Text Editor<a class="headerlink" href="#text-editor" title="Link to this heading">¶</a></h2>
+<p>Was about to recommend Atom, but it has been shutdown, so perhaps need to have a try to
+VS Code.</p>
+<p>Read more:
+<a class="reference external" href="https://www.ghacks.net/2022/06/09/githubs-atom-text-editor-will-be-retired-in-december/">https://www.ghacks.net/2022/06/09/githubs-atom-text-editor-will-be-retired-in-december/</a></p>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ansible-installation.html"
+       title="previous chapter">← Ansible installation on ARM macOS</a>
+  </li>
+  <li class="next">
+    <a href="java-installation.html"
+       title="next chapter">How to install Java SDK on macOS →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

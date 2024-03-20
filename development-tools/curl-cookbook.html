@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Curl cookbook</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Docker Cheat Sheet" href="docker-cheatsheet.html" />
+  <link rel="prev" title="Development handy tools" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development handy tools</a> &raquo;</li>
+    
+    <li>Curl cookbook</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Development handy tools</a>
+  </li>
+  <li class="next">
+    <a href="docker-cheatsheet.html"
+       title="next chapter">Docker Cheat Sheet →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="curl-cookbook">
+<h1>Curl cookbook<a class="headerlink" href="#curl-cookbook" title="Link to this heading">¶</a></h1>
+<p>This guide collects curl spell founds over the internet and stack overflow.</p>
+<section id="send-a-post-request-with-data-from-a-file">
+<h2>Send a POST Request with Data from a File<a class="headerlink" href="#send-a-post-request-with-data-from-a-file" title="Link to this heading">¶</a></h2>
+<p>This is a realistic curl spell POST a SOAP xml request to ws endpoint.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>--header<span class="w"> </span><span class="s2">&quot;Content-Type: text/xml;charset=UTF-8&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--header<span class="w"> </span><span class="s2">&quot;SOAPAction: \&quot;MySoapAction\&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--data<span class="w"> </span>@data.xml<span class="w"> </span>http://localhost:8080/ws/
+</pre></div>
+</div>
+<p>where data looks like</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="w"> </span><span class="nv">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>?&gt;
+&lt;soapenv:Envelope
+<span class="w">    </span>xmlns:soapenv<span class="o">=</span><span class="s2">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>
+<span class="w">    </span>xmlns:xsd<span class="o">=</span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>
+<span class="w">    </span>xmlns:xsi<span class="o">=</span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>&gt;
+<span class="w">    </span>&lt;soapenv:Body&gt;
+<span class="w">        </span>&lt;GetEmployeeInfo&gt;
+<span class="w">            </span>&lt;EmployeeNumber&gt;12345678&lt;/EmployeeNumber&gt;
+<span class="w">         </span>&lt;/GetEmployeeInfo&gt;
+<span class="w">    </span>&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre></div>
+</div>
+<p>Similar spell but explicitly define HTTP method, and url</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl --request POST --data-binary @data.json --header &#39;Content-Type: application/vnd.api+json&#39; --url http://localhost:3111/ws</span>
+</pre></div>
+</div>
+</section>
+<section id="using-curl-to-download-a-file">
+<h2>Using curl to download a file<a class="headerlink" href="#using-curl-to-download-a-file" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-OL<span class="w"> </span>https://dlcdn.apache.org/cassandra/3.11.13/apache-cassandra-3.11.13-bin.tar.gz
+</pre></div>
+</div>
+<p>-L, –location Follow Location header if resource is moved.
+-O, –remote-name Write  output to a local file named</p>
+</section>
+<section id="using-curl-to-find-time-to-first-byte">
+<h2>Using curl to find Time to First Byte<a class="headerlink" href="#using-curl-to-find-time-to-first-byte" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;Connect time: %{time_connect} Time to first byte: %{time_starttransfer} Total time: %{time_total} \n&quot;</span><span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>www.google.fi
+<span class="w">  </span>%<span class="w"> </span>Total<span class="w">    </span>%<span class="w"> </span>Received<span class="w"> </span>%<span class="w"> </span>Xferd<span class="w">  </span>Average<span class="w"> </span>Speed<span class="w">   </span>Time<span class="w">    </span>Time<span class="w">     </span>Time<span class="w">  </span>Current
+<span class="w">                                  </span>Dload<span class="w">  </span>Upload<span class="w">   </span>Total<span class="w">   </span>Spent<span class="w">    </span>Left<span class="w">  </span>Speed
+<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="m">14948</span><span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">14948</span><span class="w">    </span><span class="m">0</span><span class="w">     </span><span class="m">0</span><span class="w">  </span><span class="m">43891</span><span class="w">      </span><span class="m">0</span><span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w"> </span><span class="m">44620</span>
+<span class="w"> </span>Connect<span class="w"> </span>time:<span class="w"> </span><span class="m">0</span>.036681<span class="w"> </span>Time<span class="w"> </span>to<span class="w"> </span>first<span class="w"> </span>byte:<span class="w"> </span><span class="m">0</span>.306465<span class="w"> </span>Total<span class="w"> </span>time:<span class="w"> </span><span class="m">0</span>.340567
+</pre></div>
+</div>
+<p>Also you can create a file like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat curl-format.txt
+time_namelookup:  %{time_namelookup}s\n
+        time_connect:  %{time_connect}s\n
+     time_appconnect:  %{time_appconnect}s\n
+    time_pretransfer:  %{time_pretransfer}s\n
+       time_redirect:  %{time_redirect}s\n
+  time_starttransfer:  %{time_starttransfer}s\n
+                     ----------\n
+          time_total:  %{time_total}s\n
+</pre></div>
+</div>
+<p>And use like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;@curl-format.txt&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="n">www</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">fi</span>
+<span class="n">time_connect</span><span class="p">:</span>  <span class="mf">0.027</span><span class="n">s</span>
+   <span class="n">time_appconnect</span><span class="p">:</span>  <span class="mf">0.000</span><span class="n">s</span>
+  <span class="n">time_pretransfer</span><span class="p">:</span>  <span class="mf">0.027</span><span class="n">s</span>
+     <span class="n">time_redirect</span><span class="p">:</span>  <span class="mf">0.000</span><span class="n">s</span>
+<span class="n">time_starttransfer</span><span class="p">:</span>  <span class="mf">0.099</span><span class="n">s</span>
+                   <span class="o">----------</span>
+        <span class="n">time_total</span><span class="p">:</span>  <span class="mf">0.102</span><span class="n">s</span>
+</pre></div>
+</div>
+</section>
+<section id="interesting-links">
+<h2>Interesting links<a class="headerlink" href="#interesting-links" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://catonmat.net/cookbooks/curl/make-post-request">https://catonmat.net/cookbooks/curl/make-post-request</a></p></li>
+<li><p><a class="reference external" href="https://blog.josephscott.org/2011/10/14/timing-details-with-curl/">https://blog.josephscott.org/2011/10/14/timing-details-with-curl/</a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Development handy tools</a>
+  </li>
+  <li class="next">
+    <a href="docker-cheatsheet.html"
+       title="next chapter">Docker Cheat Sheet →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

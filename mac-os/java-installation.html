@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>How to install Java SDK on macOS</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="How to install MySQL on macOS" href="mysql-installation.html" />
+  <link rel="prev" title="First day using MacOs Monterey" href="first-day-using-mac.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../development-tools/index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Using MacOS as development environment</a> &raquo;</li>
+    
+    <li>How to install Java SDK on macOS</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="first-day-using-mac.html"
+       title="previous chapter">← First day using MacOs Monterey</a>
+  </li>
+  <li class="next">
+    <a href="mysql-installation.html"
+       title="next chapter">How to install MySQL on macOS →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="how-to-install-java-sdk-on-macos">
+<h1>How to install Java SDK on macOS<a class="headerlink" href="#how-to-install-java-sdk-on-macos" title="Link to this heading">¶</a></h1>
+<section id="how-to-install-java-sdk-on-macos-using-homebrew">
+<h2>How to install Java SDK on macOS using homebrew<a class="headerlink" href="#how-to-install-java-sdk-on-macos-using-homebrew" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Prerequisite install home brew if you haven’t yet installed it</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>xcode-select<span class="w"> </span>--install
+$<span class="w"> </span>$<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>-o<span class="w"> </span>install.sh<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+</pre></div>
+</div>
+<p>Add later on to your .bash_profile</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>/opt/homebrew/bin/brew<span class="w"> </span>shellenv<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>See more <a class="reference external" href="https://iboysoft.com/howto/install-homebrew-on-mac.html">install-homebrew-on-mac</a> <a class="footnote-reference brackets" href="#id1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<ol class="arabic simple" start="2">
+<li><p>Add the casks tap</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>tap<span class="w"> </span>homebrew/cask-versions
+$<span class="w"> </span>brew<span class="w"> </span>tap<span class="w"> </span>homebrew/cask
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Look for installable versions</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>search<span class="w"> </span>java
+$<span class="w"> </span>brew<span class="w"> </span>search<span class="w"> </span>temurin
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Install a specific version of the JDK such as java11, temurin8, temurin11, temurin17,
+or just java or temurin for the most current of that distribution. For example:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>java
+$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>temurin
+
+$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span><span class="nv">temurin17</span>
+<span class="o">==</span>&gt;<span class="w"> </span>Downloading<span class="w"> </span>https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.6%2B10/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.6_10.pk
+<span class="c1">######################################################################## 100.0%</span>
+<span class="o">==</span>&gt;<span class="w"> </span>Installing<span class="w"> </span>Cask<span class="w"> </span><span class="nv">temurin17</span>
+<span class="o">==</span>&gt;<span class="w"> </span>Running<span class="w"> </span>installer<span class="w"> </span><span class="k">for</span><span class="w"> </span>temurin17<span class="p">;</span><span class="w"> </span>your<span class="w"> </span>password<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>necessary.
+Package<span class="w"> </span>installers<span class="w"> </span>may<span class="w"> </span>write<span class="w"> </span>to<span class="w"> </span>any<span class="w"> </span>location<span class="p">;</span><span class="w"> </span>options<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span><span class="sb">`</span>--appdir<span class="sb">`</span><span class="w"> </span>are<span class="w"> </span>ignored.
+Password:
+installer:<span class="w"> </span>Package<span class="w"> </span>name<span class="w"> </span>is<span class="w"> </span>Eclipse<span class="w"> </span>Temurin
+installer:<span class="w"> </span>Installing<span class="w"> </span>at<span class="w"> </span>base<span class="w"> </span>path<span class="w"> </span>/
+installer:<span class="w"> </span>The<span class="w"> </span>install<span class="w"> </span>was<span class="w"> </span>successful.
+🍺<span class="w">  </span>temurin17<span class="w"> </span>was<span class="w"> </span>successfully<span class="w"> </span>installed!
+</pre></div>
+</div>
+<p>And these will be installed into /Library/Java/JavaVirtualMachines/</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/usr/libexec/java_home<span class="w"> </span>-V
+/usr/libexec/java_home<span class="w"> </span>-v<span class="w"> </span><span class="m">8</span>
+</pre></div>
+</div>
+<p>You should have something like:</p>
+<ul class="simple">
+<li><p>/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home</p></li>
+<li><p>/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home</p></li>
+<li><p>/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home</p></li>
+<li><p><a class="reference external" href="mailto:/opt/homebrew/Cellar/openjdk&#37;&#52;&#48;11/11&#46;0&#46;16&#46;1_1/libexec/openjdk&#46;jdk/Contents/Home">/opt/homebrew/Cellar/openjdk<span>&#64;</span>11/11<span>&#46;</span>0<span>&#46;</span>16<span>&#46;</span>1_1/libexec/openjdk<span>&#46;</span>jdk/Contents/Home</a></p></li>
+</ul>
+</section>
+<section id="switch-java-versions-with-jenv">
+<h2>Switch Java versions with Jenv<a class="headerlink" href="#switch-java-versions-with-jenv" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Install Jenv</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>jenv
+To<span class="w"> </span>activate<span class="w"> </span>jenv,<span class="w"> </span>add<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>/Users/jhon.smith/.bash_profile:
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.jenv/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>jenv<span class="w"> </span>init<span class="w"> </span>-<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Add java versions to Jenv</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>jenv<span class="w"> </span>add<span class="w"> </span>/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home
+$<span class="w"> </span>jenv<span class="w"> </span>add<span class="w"> </span>/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+$<span class="w"> </span>$<span class="w"> </span>jenv<span class="w"> </span>versions
+<span class="w"> </span>*<span class="w"> </span>system<span class="w"> </span><span class="o">(</span><span class="nb">set</span><span class="w"> </span>by<span class="w"> </span>/Users/jhon.smith/.jenv/version<span class="o">)</span>
+<span class="w"> </span><span class="m">1</span>.8
+<span class="w"> </span><span class="m">1</span>.8.0.312
+<span class="w"> </span><span class="m">11</span>.0
+<span class="w"> </span><span class="m">11</span>.0.16.1
+<span class="w"> </span><span class="m">17</span>.0
+<span class="w"> </span><span class="m">17</span>.0.6
+<span class="w"> </span>openjdk64-11.0.16.1
+<span class="w"> </span>zulu64-1.8.0.312
+</pre></div>
+</div>
+<p>You can set the default jvm with the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>jenv<span class="w"> </span>global<span class="w"> </span><span class="m">1</span>.8
+</pre></div>
+</div>
+<p>To make sure JAVA_HOME is set, make sure to enable the export plugin:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>jenv<span class="w"> </span>enable-plugin<span class="w"> </span><span class="nb">export</span>
+</pre></div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://iboysoft.com/howto/install-homebrew-on-mac.html">https://iboysoft.com/howto/install-homebrew-on-mac.html</a></p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="first-day-using-mac.html"
+       title="previous chapter">← First day using MacOs Monterey</a>
+  </li>
+  <li class="next">
+    <a href="mysql-installation.html"
+       title="next chapter">How to install MySQL on macOS →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

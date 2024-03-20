@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Docker Cheat Sheet</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Git Cheat Sheet" href="git-cheatsheet.html" />
+  <link rel="prev" title="Curl cookbook" href="curl-cookbook.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development handy tools</a> &raquo;</li>
+    
+    <li>Docker Cheat Sheet</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="curl-cookbook.html"
+       title="previous chapter">← Curl cookbook</a>
+  </li>
+  <li class="next">
+    <a href="git-cheatsheet.html"
+       title="next chapter">Git Cheat Sheet →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="docker-cheat-sheet">
+<h1>Docker Cheat Sheet<a class="headerlink" href="#docker-cheat-sheet" title="Link to this heading">¶</a></h1>
+<p>This cheat sheet is not meant to be exhausted and only most frequently used command are included.</p>
+<section id="docker-install">
+<h2>Docker install<a class="headerlink" href="#docker-install" title="Link to this heading">¶</a></h2>
+<p>Install Docker CLI</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">docker</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+</pre></div>
+</div>
+</section>
+<section id="docker-pull">
+<h2>Docker pull<a class="headerlink" href="#docker-pull" title="Link to this heading">¶</a></h2>
+<p>Pull default tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker pull alpine
+
+Using default tag: latest
+latest: Pulling from library/alpine
+a9eaa45ef418: Pull complete
+Digest: sha256:f271e74b17ced29b915d351685fd4644785c6d1559dd1f2d4189a5e851ef753a
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+</pre></div>
+</div>
+</section>
+<section id="docker-run">
+<h2>Docker run<a class="headerlink" href="#docker-run" title="Link to this heading">¶</a></h2>
+<p>Run container named test using the alpine:latest image. The -it instructs Docker to allocate a pseudo-TTY connected to
+the container’s stdin; creating an interactive bash shell in the container. Container will be removed on exit</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--platform<span class="o">=</span>linux/arm64<span class="w"> </span>--name<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-it<span class="w"> </span>alpine
+/<span class="w"> </span><span class="c1"># uname -a</span>
+Linux<span class="w"> </span>82b5a216c503<span class="w"> </span><span class="m">5</span>.15.64-0-virt<span class="w"> </span><span class="c1">#1-Alpine SMP Mon, 05 Sep 2022 08:02:49 +0000 aarch64 Linux</span>
+</pre></div>
+</div>
+<p>Run a Docker container in the background, or detached mode.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>my-apache-app<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>httpd:2.4
+b914647c5233865c4f227a814a1d45978d95aea5d0bc50e6fce53d3c4b444a8b
+</pre></div>
+</div>
+</section>
+<section id="docker-exec">
+<h2>Docker exec<a class="headerlink" href="#docker-exec" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>my-apache-app<span class="w"> </span>bash
+</pre></div>
+</div>
+</section>
+<section id="docker-rm">
+<h2>Docker rm<a class="headerlink" href="#docker-rm" title="Link to this heading">¶</a></h2>
+<p>Delete a container even running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>--force<span class="w"> </span>my-apache-app
+</pre></div>
+</div>
+</section>
+<section id="docker-login">
+<h2>Docker login<a class="headerlink" href="#docker-login" title="Link to this heading">¶</a></h2>
+<p>When using a private artifactory as a docker registry. First you need to login to avoid this error:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Error<span class="w"> </span>response<span class="w"> </span>from<span class="w"> </span>daemon:<span class="w"> </span>Head<span class="w"> </span><span class="s2">&quot;https://myartifactory/v2/kafka/manifests/latest&quot;</span>:<span class="w"> </span>unknown:<span class="w"> </span>Props<span class="w"> </span>Authentication<span class="w"> </span>Token<span class="w"> </span>not<span class="w"> </span>found
+$<span class="w"> </span>docker<span class="w"> </span>login<span class="w"> </span>artifactory.company.net<span class="w"> </span>-u<span class="w"> </span>user@domain.com<span class="w"> </span>-p<span class="w"> </span>base64passwd
+</pre></div>
+</div>
+<section id="interesting-links">
+<h3>Interesting links<a class="headerlink" href="#interesting-links" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dzone.com/articles/docker-best-practices">https://dzone.com/articles/docker-best-practices</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="curl-cookbook.html"
+       title="previous chapter">← Curl cookbook</a>
+  </li>
+  <li class="next">
+    <a href="git-cheatsheet.html"
+       title="next chapter">Git Cheat Sheet →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

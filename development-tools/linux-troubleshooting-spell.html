@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>Linux troubleshooting spells</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Generate secure and random password" href="password-generator.html" />
+  <link rel="prev" title="Git Cheat Sheet" href="git-cheatsheet.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../mac-os/index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Development handy tools</a> &raquo;</li>
+    
+    <li>Linux troubleshooting spells</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="git-cheatsheet.html"
+       title="previous chapter">← Git Cheat Sheet</a>
+  </li>
+  <li class="next">
+    <a href="password-generator.html"
+       title="next chapter">Generate secure and random password →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="linux-troubleshooting-spells">
+<h1>Linux troubleshooting spells<a class="headerlink" href="#linux-troubleshooting-spells" title="Link to this heading">¶</a></h1>
+<p>I sincerely wish the reader not to use these spells ever. They are only used when you are lost in a unknown server
+where you need to troubleshoot it to find out what is wrong.</p>
+<section id="space-disk-checking">
+<h2>Space disk checking<a class="headerlink" href="#space-disk-checking" title="Link to this heading">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>df<span class="w"> </span>-kh<span class="w"> </span>/opt/java11/
+
+<span class="go">Filesystem            Size  Used Avail Use% Mounted on</span>
+<span class="go">/dev/mapper/Volgroup01-lx_root</span>
+<span class="go">                       19G   15G  2.9G  84% /</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>du<span class="w"> </span>-hx<span class="w"> </span>--max-depth<span class="o">=</span>1n<span class="w"> </span>/opt/java11/<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-hr
+
+<span class="go">297M        /opt/java11/</span>
+<span class="go">220M        /opt/java11/lib</span>
+<span class="go">77M /opt/java11/jmods</span>
+<span class="go">544K        /opt/java11/legal</span>
+<span class="go">512K        /opt/java11/bin</span>
+<span class="go">228K        /opt/java11/include</span>
+<span class="go">140K        /opt/java11/conf</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ls -lrth /opt/java11/</span>
+<span class="go">total 28K</span>
+<span class="go">-rw-r--r--.  1  668  668 1.2K Aug 23  2018 release</span>
+<span class="go">drwxr-xr-x.  2 root root 4.0K Apr 22  2021 bin</span>
+<span class="go">drwxr-xr-x.  4 root root 4.0K Apr 22  2021 conf</span>
+<span class="go">drwxr-xr-x.  3 root root 4.0K Apr 22  2021 include</span>
+<span class="go">drwxr-xr-x.  2 root root 4.0K Apr 22  2021 jmods</span>
+<span class="go">drwxr-xr-x. 72 root root 4.0K Apr 22  2021 legal</span>
+<span class="go">drwxr-xr-x.  6 root root 4.0K Apr 22  2021 lib</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="git-cheatsheet.html"
+       title="previous chapter">← Git Cheat Sheet</a>
+  </li>
+  <li class="next">
+    <a href="password-generator.html"
+       title="next chapter">Generate secure and random password →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

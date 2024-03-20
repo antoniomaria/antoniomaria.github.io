@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>How to install MySQL on macOS</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" />
+  <link rel="next" title="Python on ARM M1 macOS" href="python-installation.html" />
+  <link rel="prev" title="How to install Java SDK on macOS" href="java-installation.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">antonio coding notes</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#site-content">site content</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../sphinx-doc-installation.html" class="reference internal ">How to create a static website with sphinx-docs</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="index.html" class="reference internal ">Using MacOS as development environment</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../development-tools/index.html" class="reference internal ">Development handy tools</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../blog/index.html" class="reference internal ">Development blog</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../copy-past/index.html" class="reference internal ">Copy past</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Using MacOS as development environment</a> &raquo;</li>
+    
+    <li>How to install MySQL on macOS</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="java-installation.html"
+       title="previous chapter">← How to install Java SDK on macOS</a>
+  </li>
+  <li class="next">
+    <a href="python-installation.html"
+       title="next chapter">Python on ARM M1 macOS →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="how-to-install-mysql-on-macos">
+<h1>How to install MySQL on macOS<a class="headerlink" href="#how-to-install-mysql-on-macos" title="Link to this heading">¶</a></h1>
+<section id="how-to-install-mysql-on-macos-using-homebrew">
+<h2>How to install MySQL on macOS using homebrew<a class="headerlink" href="#how-to-install-mysql-on-macos-using-homebrew" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Install mysql from a terminal shell</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span><span class="nv">mysql</span>
+<span class="o">==</span>&gt;<span class="w"> </span>mysql
+We<span class="se">\&#39;</span>ve<span class="w"> </span>installed<span class="w"> </span>your<span class="w"> </span>MySQL<span class="w"> </span>database<span class="w"> </span>without<span class="w"> </span>a<span class="w"> </span>root<span class="w"> </span>password.<span class="w"> </span>To<span class="w"> </span>secure<span class="w"> </span>it<span class="w"> </span>run:
+mysql_secure_installation
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Starts a mysql instance</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mysql.server<span class="w"> </span>start
+Starting<span class="w"> </span>MySQL
+.<span class="w"> </span>SUCCESS!
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Set root MySQL password
+The mysql_secure_installation utility validates how strong is the password, disable/enable root access from remote etc. For development purposes this is enough:
+mysql_secure_installation</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mysqladmin<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>password<span class="w"> </span><span class="s1">&#39;topsecret&#39;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Access MySQL on mac</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p
+</pre></div>
+</div>
+</section>
+<section id="installation-details">
+<h2>Installation details<a class="headerlink" href="#installation-details" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>list<span class="w"> </span>mysql
+/opt/homebrew/Cellar/mysql/8.0.31/.bottle/etc/my.cnf
+/opt/homebrew/Cellar/mysql/8.0.31/bin/
+/opt/homebrew/Cellar/mysql/8.0.31/bin/mysql
+/opt/homebrew/Cellar/mysql/8.0.31/bin/mysql.server
+/opt/homebrew/Cellar/mysql/8.0.31/bin/mysql_client_test
+/opt/homebrew/Cellar/mysql/8.0.31/bin/mysql_config
+/opt/homebrew/Cellar/mysql/8.0.31/bin/
+/opt/homebrew/Cellar/mysql/8.0.31/homebrew.mysql.service
+/opt/homebrew/Cellar/mysql/8.0.31/lib/<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="w"> </span>other<span class="w"> </span>files<span class="o">)</span>
+/opt/homebrew/Cellar/mysql/8.0.31/share/
+/opt/homebrew/Cellar/mysql/8.0.31/support-files/<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="w"> </span>files<span class="o">)</span>
+/opt/homebrew/etc/my.cnf
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cat<span class="w"> </span>/opt/homebrew/etc/my.cnf
+<span class="c1"># Default Homebrew MySQL server config</span>
+<span class="o">[</span>mysqld<span class="o">]</span>
+<span class="c1"># Only allow connections from localhost</span>
+bind-address<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">127</span>.0.0.1
+mysqlx-bind-address<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">127</span>.0.0.1
+secure-file-priv<span class="o">=</span>
+</pre></div>
+</div>
+</section>
+<section id="operation-commands">
+<h2>Operation commands<a class="headerlink" href="#operation-commands" title="Link to this heading">¶</a></h2>
+<section id="stop-mysql-instance">
+<h3>Stop MySql instance<a class="headerlink" href="#stop-mysql-instance" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mysql.server<span class="w"> </span>stop
+</pre></div>
+</div>
+</section>
+<section id="run-mysql-as-service">
+<h3>Run MySql as service<a class="headerlink" href="#run-mysql-as-service" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>mysql
+</pre></div>
+</div>
+</section>
+<section id="stop-mysql-on-mac-start">
+<h3>Stop MySql on Mac start<a class="headerlink" href="#stop-mysql-on-mac-start" title="Link to this heading">¶</a></h3>
+<p>If you don’t want MySQL service to start every time you start your mac then run the below command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>mysql
+</pre></div>
+</div>
+</section>
+<section id="import-csv-or-restoring-a-backup-up">
+<h3>Import CSV or restoring a backup up<a class="headerlink" href="#import-csv-or-restoring-a-backup-up" title="Link to this heading">¶</a></h3>
+<p>While trying to import a CSV on a mysql instance, noticed that mysql check if folder where backup is located is secure. This property is determine by
+<a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_secure_file_priv">secure-file-priv</a> <a class="footnote-reference brackets" href="#id3" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Set to empty to disable the validation on my.conf, or copy your files to default folder. In DEB, RPM, SLES, SVR4 based distro default is /var/lib/mysql-files.
+In macOS default is NULL, which means import and exports operation are disabled.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cat<span class="w"> </span>mydump.txt
+LOAD<span class="w"> </span>DATA<span class="w"> </span>INFILE<span class="w"> </span><span class="s1">&#39;output-00001.csv&#39;</span><span class="w"> </span>INTO<span class="w"> </span>TABLE<span class="w"> </span>employee<span class="w"> </span>FIELDS<span class="w"> </span>TERMINATED<span class="w"> </span>BY<span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span>ENCLOSED<span class="w"> </span>BY<span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span>LINES<span class="w"> </span>TERMINATED<span class="w"> </span>BY<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span>IGNORE<span class="w"> </span><span class="m">1</span><span class="w"> </span>ROWS<span class="w"> </span><span class="o">(</span>id,name,<span class="w"> </span>age<span class="o">)</span><span class="p">;</span>
+$<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p<span class="w"> </span>hpd<span class="w"> </span>&lt;<span class="w"> </span>mydump.sql
+</pre></div>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>See more <a class="reference external" href="https://www.novicedev.com/blog/how-install-mysql-macos-homebrew">how-install-mysql-macos-homebrew</a> <a class="footnote-reference brackets" href="#id1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+</ul>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.novicedev.com/blog/how-install-mysql-macos-homebrew">https://www.novicedev.com/blog/how-install-mysql-macos-homebrew</a></p>
+</aside>
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_secure_file_priv">https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_secure_file_priv</a></p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="java-installation.html"
+       title="previous chapter">← How to install Java SDK on macOS</a>
+  </li>
+  <li class="next">
+    <a href="python-installation.html"
+       title="next chapter">Python on ARM M1 macOS →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright Antonio Sanchez Berrocal.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
